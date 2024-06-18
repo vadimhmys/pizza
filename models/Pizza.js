@@ -1,8 +1,14 @@
 import { Pizza as PizzaMapping } from './mapping.js';
 
 class Pizza {
-  async getAll() {
-    const pizzas = await PizzaMapping.findAll();
+  async getAll(query) {
+    const { category, sortBy } = query;
+    const where = {};
+    if (category) where.categoryId = +category;
+    const pizzas = await PizzaMapping.findAll({
+      where,
+      order: [[`${query.sortBy}`, `${query.order}`]],
+    });
     return pizzas;
   }
 

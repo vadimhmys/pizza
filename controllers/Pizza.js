@@ -4,7 +4,7 @@ import AppError from '../errors/AppError.js';
 class Pizza {
   async getAll(req, res, next) {
     try {
-      const pizzas = await PizzaModel.getAll();
+      const pizzas = await PizzaModel.getAll(req.query);
       res.json(pizzas);
     } catch (e) {
       next(AppError.badRequest(e.message));
