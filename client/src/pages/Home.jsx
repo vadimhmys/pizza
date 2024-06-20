@@ -5,7 +5,7 @@ import Pizza from '../components/Pizza';
 import Sort from '../components/Sort';
 import PizzaLoader from '../components/Pizza/PizzaLoader';
 
-export default function Home() {
+export default function Home({ searchValue }) {
   const [categoryId, setCategoryId] = React.useState(1);
   const [sortType, setSortType] = React.useState({
     name: 'популярности',
@@ -30,6 +30,28 @@ export default function Home() {
       });
     window.scrollTo(0, 0);
   }, [categoryId, sortType]);
+
+  const pizzas = items
+  .filter((obj) => {
+    if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+      return true;
+    }
+
+    return false;
+  })
+  .map((i) => (
+    <Pizza
+      key={i.id}
+      title={i.title}
+      price={i.price}
+      imageUrl={i.imageUrl}
+      sizes={i.sizes}
+      types={i.types}
+    />
+  ));
+
+  const skeletons = [...new Array(6)].map((_, index) => <PizzaLoader key={index} />);
+
   return (
     <>
       <div className="container">
@@ -39,18 +61,7 @@ export default function Home() {
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">
-          {isLoading
-            ? [...new Array(6)].map((_, index) => <PizzaLoader key={index} />)
-            : items.map((i) => (
-                <Pizza
-                  key={i.id}
-                  title={i.title}
-                  price={i.price}
-                  imageUrl={i.imageUrl}
-                  sizes={i.sizes}
-                  types={i.types}
-                />
-              ))}
+          {isLoading ? skeletons : pizzas}
         </div>
       </div>
     </>
