@@ -4,6 +4,7 @@ import Categories from '../components/Categories';
 import Pizza from '../components/Pizza';
 import Sort from '../components/Sort';
 import PizzaLoader from '../components/Pizza/PizzaLoader';
+import Pagination from '../components/Pagination';
 
 export default function Home({ searchValue }) {
   const [categoryId, setCategoryId] = React.useState(1);
@@ -63,6 +64,7 @@ export default function Home({ searchValue }) {
         <div className="content__items">
           {isLoading ? skeletons : pizzas}
         </div>
+        <Pagination/>
       </div>
     </>
   );
