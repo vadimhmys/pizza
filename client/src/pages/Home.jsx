@@ -5,8 +5,10 @@ import Pizza from '../components/Pizza';
 import Sort from '../components/Sort';
 import PizzaLoader from '../components/Pizza/PizzaLoader';
 import Pagination from '../components/Pagination';
+import { SearchContext } from '../App';
 
-export default function Home({ searchValue }) {
+export default function Home() {
+  const { searchValue } = React.useContext(SearchContext );
   const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
     name: 'популярности',
@@ -16,8 +18,6 @@ export default function Home({ searchValue }) {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [elementCount, setElementCount] = useState(0);
-
-  console.log('currentPage: ', currentPage);
 
   const onChangeCategory = (id) => {
     setCategoryId(id);
