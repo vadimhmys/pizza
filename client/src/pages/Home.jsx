@@ -10,16 +10,10 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 
 export default function Home() {
-  const categoryId = useSelector(state => state.filter.categoryId);
   const dispatch = useDispatch();
-
-
-  const { searchValue } = React.useContext(SearchContext );
-  //const [categoryId, setCategoryId] = React.useState(0);
-  const [sortType, setSortType] = React.useState({
-    name: 'популярности',
-    sortProperty: 'rating',
-  });
+  const { categoryId, sort } = useSelector((state) => state.filter);
+  const sortType = sort.sortProperty;
+  const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,10 +27,10 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true);
     fetch(
-      `http://localhost:7000/api/pizza/getall?category=${categoryId
-      }&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-        sortType.sortProperty.includes('-') ? 'ASC' : 'DESC'
-      }&limit=4&page=${currentPage}`,
+      `http://localhost:7000/api/pizza/getall?category=${categoryId}&sortBy=${sortType.replace(
+        '-',
+        '',
+      )}&order=${sortType.includes('-') ? 'ASC' : 'DESC'}&limit=4&page=${currentPage}`,
     )
       .then((res) => res.json())
       .then((obj) => {
@@ -73,11 +67,15 @@ export default function Home() {
       <div className="container">
         <div className="content__top">
           <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-          <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
+          <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-        <Pagination onChangePage={(number) => setCurrentPage(number)} elementCount={elementCount} currentPage={currentPage}/>
+        <Pagination
+          onChangePage={(number) => setCurrentPage(number)}
+          elementCount={elementCount}
+          currentPage={currentPage}
+        />
       </div>
     </>
   );
