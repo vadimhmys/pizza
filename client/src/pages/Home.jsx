@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 import Categories from '../components/Categories';
 import Pizza from '../components/Pizza';
@@ -8,8 +10,12 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 
 export default function Home() {
+  const categoryId = useSelector(state => state.filter.categoryId);
+  const dispatch = useDispatch();
+
+
   const { searchValue } = React.useContext(SearchContext );
-  const [categoryId, setCategoryId] = React.useState(0);
+  //const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
     name: 'популярности',
     sortProperty: 'rating',
@@ -20,7 +26,7 @@ export default function Home() {
   const [elementCount, setElementCount] = useState(0);
 
   const onChangeCategory = (id) => {
-    setCategoryId(id);
+    dispatch(setCategoryId(id));
     setCurrentPage(1);
   };
 
