@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../redux/slices/filterSlice';
 
@@ -26,16 +27,16 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(
-      `http://localhost:7000/api/pizza/getall?category=${categoryId}&sortBy=${sortType.replace(
-        '-',
-        '',
-      )}&order=${sortType.includes('-') ? 'ASC' : 'DESC'}&limit=4&page=${currentPage}`,
-    )
-      .then((res) => res.json())
-      .then((obj) => {
-        setItems(obj.rows);
-        setElementCount(obj.count);
+    axios
+      .get(
+        `http://localhost:7000/api/pizza/getall?category=${categoryId}&sortBy=${sortType.replace(
+          '-',
+          '',
+        )}&order=${sortType.includes('-') ? 'ASC' : 'DESC'}&limit=4&page=${currentPage}`,
+      )
+      .then((res) => {
+        setItems(res.data.rows);
+        setElementCount(res.data.count);
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
