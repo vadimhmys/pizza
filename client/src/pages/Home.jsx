@@ -13,11 +13,9 @@ import { SearchContext } from '../App';
 export default function Home() {
   const dispatch = useDispatch();
   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
-  const sortType = sort.sortProperty;
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  //const [currentPage, setCurrentPage] = useState(1);
   const [elementCount, setElementCount] = useState(0);
 
   const onChangeCategory = (id) => {
@@ -30,12 +28,13 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
+
+    const sortBy = sort.sortProperty.replace('-','',);
+    const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC';
+
     axios
       .get(
-        `http://localhost:7000/api/pizza/getall?category=${categoryId}&sortBy=${sortType.replace(
-          '-',
-          '',
-        )}&order=${sortType.includes('-') ? 'ASC' : 'DESC'}&limit=4&page=${currentPage}`,
+        `http://localhost:7000/api/pizza/getall?category=${categoryId}&sortBy=${sortBy}&order=${order}&limit=4&page=${currentPage}`,
       )
       .then((res) => {
         setItems(res.data.rows);
@@ -43,7 +42,7 @@ export default function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, currentPage]);
+  }, [categoryId, sort.sortProperty, currentPage]);
 
   const pizzas = items
     .filter((obj) => {
