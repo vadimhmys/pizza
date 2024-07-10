@@ -1,11 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import CartItem from '../components/CartItem';
 
 export default function Cart() {
-  const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
   return (
     <div className="container container--cart">
