@@ -113,6 +113,7 @@ export default function Home() {
     })
     .map((i) => (
       <Pizza
+        id={i.id}
         key={i.id}
         title={i.title}
         price={i.price}
