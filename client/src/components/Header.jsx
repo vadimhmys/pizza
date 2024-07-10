@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import Search from './Search';
 
 export default function Header() {
-  const {items, totalPrice} = useSelector(state => state.cart);
-  const totalCount = items.reduce((sum, item) => item.count + sum, 0)
+  const { items, totalPrice } = useSelector((state) => state.cart);
+  const totalCount = items.reduce((sum, item) => item.count + sum, 0);
   return (
     <div className="header">
       <div className="container">
