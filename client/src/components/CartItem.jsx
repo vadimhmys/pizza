@@ -18,7 +18,7 @@ export default function CartItem({ id, title, type, price, count, imageUrl }) {
   };
 
   const onClickRemove = () => {
-    if (window.confirm('Are you sure you want to remove?')) {
+    if (window.confirm('Ты уверен, что хочешь удалить пиццу?')) {
       dispatch(removeItem(id));
     }
   };
