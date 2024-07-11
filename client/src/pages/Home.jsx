@@ -36,23 +36,25 @@ export default function Home() {
   };
 
   const fetchPizzas = React.useCallback(
-    (ignore) => {
+    async (ignore) => {
       setIsLoading(true);
 
       const sortBy = sort.sortProperty.replace('-', '');
       const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC';
 
-      axios
-        .get(
+      try {
+        const res = await axios.get(
           `http://localhost:7000/api/pizza/getall?category=${categoryId}&sortBy=${sortBy}&order=${order}&limit=4&page=${currentPage}`,
-        )
-        .then((res) => {
-          if (!ignore) {
-            setItems(res.data.rows);
-            setElementCount(res.data.count);
-            setIsLoading(false);
-          }
-        });
+        );
+        if (!ignore) {
+          setItems(res.data.rows);
+          setElementCount(res.data.count);
+        }
+      } catch (error) {
+        console.log('ERROR: ', error.message);
+      } finally {
+        setIsLoading(false);
+      }
     },
     [categoryId, sort.sortProperty, currentPage],
   );
