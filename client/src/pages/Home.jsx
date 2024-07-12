@@ -34,7 +34,7 @@ export default function Home() {
   };
 
   const getPizzas = React.useCallback(
-     (ignore) => {
+    async (ignore) => {
       const sortBy = sort.sortProperty.replace('-', '');
       const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC';
 
@@ -126,7 +126,12 @@ export default function Home() {
           <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
-        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+        {
+          status === 'error' ? <div className='content__error-info'>
+            <h2>Произошла ошибка</h2>
+            <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже.</p>
+          </div> : <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+        }
         <Pagination
           onChangePage={onChangePage}
           elementCount={count}

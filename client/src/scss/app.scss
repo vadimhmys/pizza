@@ -18,6 +18,22 @@ body {
 .content {
   padding: 40px 0;
 
+  &__error-info {
+    margin: 100px auto;
+    width: 500px;
+    text-align: center;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 22px;
+    }
+  }
+
   &__title {
     margin: 35px 0;
   }
@@ -89,7 +105,7 @@ body {
       margin-right: 10px;
       path {
         stroke: $black;
-        strokeWidth: 1.9;
+        stroke-width: 1.9;
       }
     }
   }
@@ -282,7 +298,7 @@ body {
           margin-right: 12px;
           path {
             fill: transparent;
-            strokeWidth: 2;
+            stroke-width: 2;
           }
         }
       }
