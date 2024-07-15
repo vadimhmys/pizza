@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function FullPizza() {
   const [pizza, setPizza] = React.useState();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     async function fetchPizza() {
@@ -12,12 +13,13 @@ export default function FullPizza() {
         const { data } = await axios.get(`http://localhost:7000/api/pizza/getone/` + id);
         setPizza(data);
       } catch (error) {
-        console.log('ERROR: ', error.message);
+        alert('Ошибка при получении пиццы!');
+        navigate('/');
       }
     }
 
     fetchPizza();
-  }, [id]);
+  }, [id, navigate]);
 
   if (!pizza) {
     return 'Загрузка...';
