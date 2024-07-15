@@ -19,8 +19,6 @@ export default function FullPizza() {
     fetchPizza();
   }, [id]);
 
-  console.log(pizza);
-
   if (!pizza) {
     return 'Загрузка...';
   }
