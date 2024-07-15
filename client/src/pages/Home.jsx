@@ -1,8 +1,13 @@
 import React from 'react';
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import {
+  selectFilter,
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 import Categories from '../components/Categories';
@@ -37,12 +42,14 @@ export default function Home() {
       const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC';
 
       if (!ignore) {
-        dispatch(fetchPizzas({
-          sortBy,
-          order,
-          categoryId,
-          currentPage
-        }));
+        dispatch(
+          fetchPizzas({
+            sortBy,
+            order,
+            categoryId,
+            currentPage,
+          }),
+        );
       }
     },
     [categoryId, sort.sortProperty, currentPage, dispatch],
@@ -103,15 +110,16 @@ export default function Home() {
       return false;
     })
     .map((i) => (
-      <Pizza
-        id={i.id}
-        key={i.id}
-        title={i.title}
-        price={i.price}
-        imageUrl={i.imageUrl}
-        sizes={i.sizes}
-        types={i.types}
-      />
+      <Link key={i.id} to={`/pizza/${i.id}`}>
+        <Pizza
+          id={i.id}
+          title={i.title}
+          price={i.price}
+          imageUrl={i.imageUrl}
+          sizes={i.sizes}
+          types={i.types}
+        />
+      </Link>
     ));
 
   const skeletons = [...new Array(6)].map((_, index) => <PizzaLoader key={index} />);
@@ -124,17 +132,15 @@ export default function Home() {
           <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
-        {
-          status === 'error' ? <div className='content__error-info'>
+        {status === 'error' ? (
+          <div className="content__error-info">
             <h2>Произошла ошибка</h2>
             <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже.</p>
-          </div> : <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
-        }
-        <Pagination
-          onChangePage={onChangePage}
-          elementCount={count}
-          currentPage={currentPage}
-        />
+          </div>
+        ) : (
+          <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+        )}
+        <Pagination onChangePage={onChangePage} elementCount={count} currentPage={currentPage} />
       </div>
     </>
   );
