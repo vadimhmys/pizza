@@ -3,7 +3,13 @@ import ReactPaginate from 'react-paginate';
 
 import styles from './Pagination.module.scss';
 
-export default function Pagination({ onChangePage, elementCount, currentPage }) {
+type PaginationProps = {
+  onChangePage: any;
+  elementCount: number;
+  currentPage: number;
+};
+
+const Pagination: React.FC<PaginationProps> = ({ onChangePage, elementCount, currentPage }) => {
   const count = Math.ceil(elementCount / 4);
   return (
     <ReactPaginate
@@ -19,3 +25,5 @@ export default function Pagination({ onChangePage, elementCount, currentPage }) 
     />
   );
 }
+
+export default Pagination;

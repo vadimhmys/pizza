@@ -5,15 +5,15 @@ import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
 
-export default function Search() {
+const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('');
-  const inputRef = React.useRef(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onClearInput = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateSearchValue = React.useRef(
@@ -21,7 +21,7 @@ export default function Search() {
       dispatch(setSearchValue(str));
     }, 1000)).current;
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -64,3 +64,5 @@ export default function Search() {
     </div>
   );
 }
+
+export default Search;

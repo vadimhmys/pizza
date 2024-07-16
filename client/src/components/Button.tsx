@@ -1,6 +1,11 @@
 import React from 'react';
 
-export default function Button({onClickAdd, addedCount}) {
+type ButtonProps = {
+  onClickAdd: any;
+  addedCount: number;
+};
+
+const Button: React.FC<ButtonProps> = ({onClickAdd, addedCount}) => {
   return (
     <button className="button button--outline button--add" onClick={onClickAdd}>
       <svg
@@ -19,3 +24,5 @@ export default function Button({onClickAdd, addedCount}) {
     </button>
   );
 }
+
+export default Button;

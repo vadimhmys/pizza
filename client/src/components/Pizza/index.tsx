@@ -5,7 +5,16 @@ import Button from '../Button';
 
 const pizzaTypes = ['тонкое', 'традиционное'];
 
-export default function Pizza({ id, title, price, imageUrl, sizes, types }) {
+type PizzaProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const Pizza: React.FC<PizzaProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
   const addedCount = cartItem ? cartItem.count : 0;
@@ -24,11 +33,11 @@ export default function Pizza({ id, title, price, imageUrl, sizes, types }) {
     dispatch(addItem(item));
   };
 
-  const onSizeClick = (index) => {
+  const onSizeClick = (index: number) => {
     setActiveSizeIndex(index);
   };
 
-  const onTypeClick = (index) => {
+  const onTypeClick = (index: number) => {
     setActiveTypeIndex(index);
   };
 
@@ -67,3 +76,5 @@ export default function Pizza({ id, title, price, imageUrl, sizes, types }) {
     </div>
   );
 }
+
+export default Pizza;

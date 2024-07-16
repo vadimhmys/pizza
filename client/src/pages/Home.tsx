@@ -16,7 +16,7 @@ import Sort, { list } from '../components/Sort';
 import PizzaLoader from '../components/Pizza/PizzaLoader';
 import Pagination from '../components/Pagination';
 
-export default function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
@@ -26,23 +26,24 @@ export default function Home() {
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const onChangeCategory = React.useCallback(
-    (id) => {
-      dispatch(setCategoryId(id));
+    (idx: number) => {
+      dispatch(setCategoryId(idx));
     },
     [dispatch],
   );
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = React.useCallback(
-    async (ignore) => {
+    async (ignore: boolean) => {
       const sortBy = sort.sortProperty.replace('-', '');
       const order = sort.sortProperty.includes('-') ? 'ASC' : 'DESC';
 
       if (!ignore) {
         dispatch(
+          // @ts-ignore
           fetchPizzas({
             sortBy,
             order,
@@ -102,14 +103,14 @@ export default function Home() {
   }, [categoryId, sort.sortProperty, currentPage, navigate]);
 
   const pizzas = items
-    .filter((obj) => {
+    .filter((obj: any) => {
       if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
 
       return false;
     })
-    .map((i) => (
+    .map((i: any) => (
       <Link key={i.id} to={`/pizza/${i.id}`}>
         <Pizza
           id={i.id}
@@ -145,3 +146,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;

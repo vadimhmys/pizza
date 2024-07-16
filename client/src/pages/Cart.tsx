@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty';
 
-export default function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const {items, totalPrice} = useSelector(selectCart);
-  const totalCount = items.reduce((sum, item) => item.count + sum, 0)
+  const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0)
 
   const onClickClear = () => {
     if (window.confirm('Ты уверен, что хочешь очистить корзину?')) {
@@ -97,7 +97,7 @@ export default function Cart() {
         </div>
         <div className="content__items">
           {
-            items.map(item => <CartItem key={item.id} {...item}/>)
+            items.map((item: any) => <CartItem key={item.id} {...item}/>)
           }
         </div>
         <div className="cart__bottom">
@@ -138,3 +138,5 @@ export default function Cart() {
     </div>
   );
 }
+
+export default Cart;
