@@ -2,14 +2,14 @@ import { Pizza as PizzaMapping } from './mapping.js';
 
 class Pizza {
   async getAll(query) {
-    let { category, sortBy, order, limit, page } = query;
+    let { categoryId, sortBy, order, limit, page } = query;
     limit = limit && /[0-9]+/.test(limit) && parseInt(limit) ? parseInt(limit) : 4;
     page = page && /[0-9]+/.test(page) && parseInt(page) ? parseInt(page) : 1;
     const offset = (page - 1) * limit;
     const where = {};
     let pizzas;
-    if (category && category > 0) {
-      where.categoryId = +category;
+    if (categoryId && categoryId > 0) {
+      where.categoryId = +categoryId;
       pizzas = await PizzaMapping.findAndCountAll({
         where,
         limit,
@@ -18,7 +18,7 @@ class Pizza {
       });
     }
 
-    if (category === '0') {
+    if (categoryId === '0') {
       pizzas = await PizzaMapping.findAndCountAll({
         where,
         limit,
