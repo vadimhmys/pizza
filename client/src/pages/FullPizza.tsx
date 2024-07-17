@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Pizza } from '../redux/slices/pizzaSlice';
 
 const FullPizza: React.FC = () => {
   const [pizza, setPizza] = React.useState<{
@@ -14,7 +15,7 @@ const FullPizza: React.FC = () => {
   React.useEffect(() => {
     async function fetchPizza() {
       try {
-        const { data } = await axios.get(`http://localhost:7000/api/pizza/getone/` + id);
+        const { data } = await axios.get<Pizza>(`http://localhost:7000/api/pizza/getone/` + id);
         setPizza(data);
       } catch (error) {
         alert('Ошибка при получении пиццы!');

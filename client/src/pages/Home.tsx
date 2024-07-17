@@ -9,12 +9,12 @@ import {
   setFilters,
 } from '../redux/slices/filterSlice';
 import { useAppDispatch } from '../redux/store';
-import { fetchPizzas, SearchPizzaParams, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, Pizza, SearchPizzaParams, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 import Categories from '../components/Categories';
-import Pizza from '../components/Pizza';
+import PizzaBlock from '../components/PizzaBlock';
 import Sort, { list } from '../components/Sort';
-import PizzaLoader from '../components/Pizza/PizzaLoader';
+import PizzaLoader from '../components/PizzaBlock/PizzaLoader';
 import Pagination from '../components/Pagination';
 
 const Home: React.FC = () => {
@@ -113,15 +113,15 @@ const Home: React.FC = () => {
   }, [categoryId, sort.sortProperty, currentPage, navigate]);
 
   const pizzas = items
-    .filter((obj: any) => {
+    .filter((obj: Pizza) => {
       if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
 
       return false;
     })
-    .map((i: any) => (
-      <Pizza
+    .map((i: Pizza) => (
+      <PizzaBlock
         key={i.id}
         id={i.id}
         title={i.title}
