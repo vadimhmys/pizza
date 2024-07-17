@@ -1,7 +1,7 @@
 import React from 'react';
 
 type ButtonProps = {
-  onClickAdd: any;
+  onClickAdd: () => void;
   addedCount: number;
 };
 

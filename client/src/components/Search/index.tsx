@@ -16,12 +16,14 @@ const Search: React.FC = () => {
     inputRef.current?.focus();
   };
 
-  const updateSearchValue = React.useRef(
-    debounce((str) => {
+  const updateSearchValue = React.useMemo(
+    () => debounce((str: string) => {
       dispatch(setSearchValue(str));
-    }, 1000)).current;
+    }, 1000),
+    [dispatch]
+  );
 
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -63,6 +65,6 @@ const Search: React.FC = () => {
       )}
     </div>
   );
-}
+};
 
 export default Search;

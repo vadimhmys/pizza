@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 
+type PopupClick = MouseEvent & {
+  composedPath: () => Node[];
+};
+
 type SortItem = {
   name: string;
   sortProperty: string;
@@ -28,8 +32,9 @@ const Sort: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopupClick;
+      if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
@@ -72,6 +77,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-}
+};
 
 export default Sort;
