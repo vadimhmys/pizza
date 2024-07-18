@@ -2,12 +2,8 @@ import React from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  selectFilter,
-  setCategoryId,
-  setCurrentPage,
-  setFilters,
-} from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
+import { selectFilter } from '../redux/filter/selectors';
 import { useAppDispatch } from '../redux/store';
 import { fetchPizzas, Pizza, SearchPizzaParams, selectPizzaData } from '../redux/slices/pizzaSlice';
 
@@ -139,7 +135,7 @@ const Home: React.FC = () => {
       <div className="container">
         <div className="content__top">
           <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-          <Sort value={sort}/>
+          <Sort value={sort} />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         {status === 'error' ? (
