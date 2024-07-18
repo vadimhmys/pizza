@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
 import { selectFilter } from '../redux/filter/selectors';
 import { useAppDispatch } from '../redux/store';
-import { fetchPizzas, Pizza, SearchPizzaParams, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
+import { selectPizzaData } from '../redux/pizza/selectors';
+import { Pizza, SearchPizzaParams } from '../redux/pizza/types';
 
 import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';

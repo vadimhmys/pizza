@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Pizza } from '../redux/slices/pizzaSlice';
+import { Pizza } from '../redux/pizza/types';
 
 const FullPizza: React.FC = () => {
   const [pizza, setPizza] = React.useState<{
