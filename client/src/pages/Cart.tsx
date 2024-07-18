@@ -1,15 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {CartItem, clearItems, selectCart} from '../redux/slices/cartSlice';
-
+import { clearItems } from '../redux/cart/slice';
+import { selectCart } from '../redux/cart/selectors';
+import { CartItem } from '../redux/cart/types';
 import { Link } from 'react-router-dom';
 import CartItemBlock from '../components/CartItemBlock';
 import CartEmpty from '../components/CartEmpty';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const {items, totalPrice} = useSelector(selectCart);
-  const totalCount = items.reduce((sum: number, item: CartItem) => item.count + sum, 0)
+  const { items, totalPrice } = useSelector(selectCart);
+  const totalCount = items.reduce((sum: number, item: CartItem) => item.count + sum, 0);
 
   const onClickClear = () => {
     if (window.confirm('Ты уверен, что хочешь очистить корзину?')) {
@@ -18,7 +19,7 @@ const Cart: React.FC = () => {
   };
 
   if (!totalPrice) {
-    return <CartEmpty/>
+    return <CartEmpty />;
   }
 
   return (
@@ -96,9 +97,9 @@ const Cart: React.FC = () => {
           </div>
         </div>
         <div className="content__items">
-          {
-            items.map((item: CartItem) => <CartItemBlock key={item.id} {...item}/>)
-          }
+          {items.map((item: CartItem) => (
+            <CartItemBlock key={item.id} {...item} />
+          ))}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">
@@ -137,6 +138,6 @@ const Cart: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;
